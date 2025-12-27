@@ -1,5 +1,5 @@
 #!/bin/bash
-# Build script for TAG Pressable Multisite plugin
+# Build script for WP Sync DB plugin
 
 # Extract version from plugin file
 VERSION=$(grep 'Version:' wp-sync-db.php | head -1 | sed 's/.*Version:[[:space:]]*\([0-9.]*\).*/\1/')
@@ -9,7 +9,7 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-echo "Building TAG Pressable Multisite v${VERSION}..."
+echo "Building WP Sync DB v${VERSION}..."
 
 # Clean up previous builds
 rm -rf build

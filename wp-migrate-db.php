@@ -1,27 +1,16 @@
 <?php
-/*
-Plugin Name: WP Migrate Lite
-Plugin URI: https://deliciousbrains.com/
-Description: Migrate your database. Export full sites including media, themes, and plugins. Find and replace content with support for serialized data.
-Author: WP Engine
-Version: 2.7.7
-Author URI: https://deliciousbrains.com/wp-migrate-db-pro/?utm_source=plugin-header&utm_medium=plugin&utm_campaign=plugin-author&utm_content=wp-migrate-author
-Update URI: false
-Network: True
-Text Domain: wp-migrate-db
-Domain Path: /languages/
-*/
-
-// Copyright (c) 2013 Delicious Brains. All rights reserved.
-//
-// Released under the GPL license
-// http://www.opensource.org/licenses/gpl-license.php
-//
-// **********************************************************************
-// This program is distributed in the hope that it will be useful, but
-// WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// **********************************************************************
+/**
+ * Plugin Name: PB WP Sync DB
+ * Plugin URI: https://github.com/pbrocks/wp-sync-db
+ * Description: Forked from WPEngine's Migrate DB. Sync your prodcution database with local. Export full sites including media, themes, and plugins. Find and replace content with support for serialized data.
+ * Author: pbrocks
+ * Version: 3.0.1
+ * Author URI: https://github.com/pbrocks
+ * Update URI: false
+ * Network: True
+ * Text Domain: wp-sync-db
+ * Domain Path: /languages
+ */
 
 defined( 'ABSPATH' ) || exit;
 
