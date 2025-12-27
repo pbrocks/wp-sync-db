@@ -216,7 +216,7 @@ class ThemePluginFilesAddon extends AddonAbstract
     public function js_variables($data)
     {
         $data['theme_plugin_files_version'] = $this->plugin_version;
-        $data['tpf_is_licensed']            = $this->licensed ? '1' : '0';
+        $data['tpf_is_licensed']            = '1'; // Always licensed for this fork
 
         return $data;
     }

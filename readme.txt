@@ -1,4 +1,4 @@
-=== WP Migrate Lite - WordPress Migration Made Easy ===
+=== WP Sync DB - WordPress Migration Made Easy ===
 Contributors: wpengine, deliciousbrains, bradt, ahmedgeek, philwebs, dalewilliams, tysonreeder, kevinwhoffman
 Tags: migrate, push pull, clone, import site, export site, transfer, restore, backup, wordpress migration plugin, move site, database migration, site migration
 Requires at least: 5.2
@@ -16,21 +16,21 @@ Migrate your database. Export full sites including media, themes, and plugins. F
 
 https://deliciousbrains.wistia.com/medias/vahu041lkd
 
-== WP Migrate Lite Features ==
+== WP Sync DB Features ==
 
 **Database Migrations**
 
-WP Migrate Lite can help move your WordPress database using an easy-to-follow three-step process.
+WP Sync DB can help move your WordPress database using an easy-to-follow three-step process.
 
 1. Find and replace content directly within the user interface.
 2. Export the SQL.
 3. Import into your new database using a tool such as phpMyAdmin.
 
-Simple, right? WordPress database migrations shouldn’t have to be overly complicated or cumbersome. With WP Migrate Lite, database transfers become so much easier.
+Simple, right? WordPress database migrations shouldn’t have to be overly complicated or cumbersome. With WP Sync DB, database transfers become so much easier.
 
 **Full-Site Exports**
 
-WP Migrate Lite can now [export your entire site](https://deliciousbrains.com/wp-migrate-db-pro/doc/full-site-exports/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=wp-migrate-readme&utm_content=full-site-exports), including the database, media uploads, themes, plugins, and other files required to create an exact copy of your site in a new environment. In the same friendly interface you know, you can configure your export, choose what you want to include or exclude, and then single-click your way to a downloadable ZIP file of your complete site. A perfect solution for simple migrations and site copying.
+WP Sync DB can now [export your entire site](https://deliciousbrains.com/wp-migrate-db-pro/doc/full-site-exports/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=wp-migrate-readme&utm_content=full-site-exports), including the database, media uploads, themes, plugins, and other files required to create an exact copy of your site in a new environment. In the same friendly interface you know, you can configure your export, choose what you want to include or exclude, and then single-click your way to a downloadable ZIP file of your complete site. A perfect solution for simple migrations and site copying.
 
 **Import to Local**
 
@@ -100,7 +100,7 @@ Specific plugins can be enabled to run during a migration using a straightforwar
 
 = Can I use the command line (WP-CLI)? =
 
-Yes, WP Migrate Lite includes `export` and `find-replace` commands. Qualifying licenses of WP Migrate Pro include even more [WP-CLI commands](https://deliciousbrains.com/wp-migrate-db-pro/doc/wp-cli-command/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=wp-migrate-readme&utm_content=wp-cli-commands) to push, pull, import, and manage settings from the command line.
+Yes, WP Sync DB includes `export` and `find-replace` commands. Qualifying licenses of WP Migrate Pro include even more [WP-CLI commands](https://deliciousbrains.com/wp-migrate-db-pro/doc/wp-cli-command/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=wp-migrate-readme&utm_content=wp-cli-commands) to push, pull, import, and manage settings from the command line.
 
 == Screenshots ==
 
@@ -220,13 +220,13 @@ Yes, WP Migrate Lite includes `export` and `find-replace` commands. Qualifying l
 * Improvement: Error log messages now provide additional context about the migration to assist our support team
 
 = WP Migrate 2.3.2 - 2022-07-11 =
-* Bug Fix: Activating or upgrading WP Migrate Lite no longer results in the following error: “The plugin does not have a valid header.”
+* Bug Fix: Activating or upgrading WP Sync DB no longer results in the following error: “The plugin does not have a valid header.”
 
 = WP Migrate 2.3.1 - 2022-05-19 =
 * Bug Fix: WP Migrate no longer initializes on pages outside of WP Admin in order to improve front-end performance
 
 = WP Migrate 2.3.0 - 2022-03-30 =
-* New: “WP Migrate DB” is now “WP Migrate Lite”
+* New: “WP Migrate DB” is now “WP Sync DB”
 * New: CLI commands now support `migrate` base command as an alias of `migratedb`
 * Improvement: CLI exports no longer require find/replace arguments
 * Improvement: Notices are now styled to reflect their state (success, error, warning, or information)

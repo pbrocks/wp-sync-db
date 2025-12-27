@@ -1240,8 +1240,8 @@ msgstr ""
 #: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:282
 #: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:278
 msgid ""
-"WP Migrate Lite and WP Migrate cannot both be active. We've automatically "
-"deactivated WP Migrate Lite."
+"WP Sync DB and WP Migrate cannot both be active. We've automatically "
+"deactivated WP Sync DB."
 msgstr ""
 
 #: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:266
@@ -1249,7 +1249,7 @@ msgstr ""
 #: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:300
 #: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:280
 msgid ""
-"WP Migrate Lite and WP Migrate cannot both be active. We've automatically "
+"WP Sync DB and WP Migrate cannot both be active. We've automatically "
 "deactivated WP Migrate."
 msgstr ""
 
@@ -3467,7 +3467,7 @@ msgstr ""
 
 #: src/wp-migrate-db-pro/class/Free/Plugin/PluginManager.php:81
 #: src/wp-migrate-db-pro/class/Free/Plugin/PluginManager.php:68
-msgid "WP Migrate Lite"
+msgid "WP Sync DB"
 msgstr ""
 
 #: src/wp-migrate-db-pro/class/Free/Plugin/PluginManager.php:171

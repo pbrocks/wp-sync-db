@@ -68,14 +68,14 @@ class WPMDB_PHP_Checker {
 	}
 
 	/**
-	 * Display error and die when PHP version is too low for WP Migrate Lite
+	 * Display error and die when PHP version is too low for WP Sync DB
 	 *
 	 * Called during plugin activation if PHP version check fails.
 	 *
 	 * @return void Dies with error message
 	 */
 	public static function wpmdb_php_version_too_low() {
-		wp_die( sprintf( self::$base_message, 'WP Migrate Lite', self::$min_php, PHP_VERSION, self::$php_doc_link ) );
+		wp_die( sprintf( self::$base_message, 'WP Sync DB', self::$min_php, PHP_VERSION, self::$php_doc_link ) );
 	}
 
 	/**
@@ -138,7 +138,7 @@ class WPMDB_PHP_Checker {
 				<p>%s %s</p>
 		</div>';
 
-		$plugin  = 'wp-migrate-db-pro.php' === basename( $this->path ) ? __( 'WP Migrate' ) : __( 'WP Migrate Lite' );
+		$plugin  = 'wp-migrate-db-pro.php' === basename( $this->path ) ? __( 'WP Migrate' ) : __( 'WP Sync DB' );
 		$message = sprintf( __( 'requires PHP version %s or higher to run and has been deactivated. You are currently running version %s. <a href="%s">Learn More »</a>', 'wp-sync-db' ), self::$min_php, PHP_VERSION, self::$php_doc_link );
 
 		echo sprintf( $str, $plugin, $message );

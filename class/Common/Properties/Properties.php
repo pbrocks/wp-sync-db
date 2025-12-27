@@ -36,9 +36,6 @@ class Properties
     public $template_dir;
     public $is_pro = false;
     public $plugin_title;
-    public $mu_plugin_dir;
-    public $mu_plugin_source;
-    public $mu_plugin_dest;
     public $filesystem;
     public $core_slug;
     public $attempting_to_connect_to;
@@ -55,19 +52,20 @@ class Properties
 
     public function __construct()
     {
-        $is_pro = false;
+        $is_pro = true; // Unlocked for personal use
 
         $this->transient_timeout       = 60 * 60 * 12;
         $this->transient_retry_timeout = 60 * 60 * 2;
 
-        $free_plugin_active = is_plugin_active('wp-migrate-db-pro/wp-migrate-db.php');
+        $free_plugin_active = is_plugin_active('wp-migrate-db-pro/wp-sync-db.php');
         $pro_plugin_active  = is_plugin_active('wp-migrate-db-pro/wp-migrate-db-pro.php');
 
         if ($pro_plugin_active && !$free_plugin_active) {
             $is_pro = true;
         }
 
-        $this->plugin_file_path = $is_pro ? realpath(dirname(__DIR__) . '/../../wp-migrate-db-pro.php') : realpath(dirname(__DIR__) . '/../../wp-migrate-db.php');
+        // Always use wp-sync-db.php as the main file for this fork
+        $this->plugin_file_path = realpath(dirname(__DIR__) . '/../../wp-sync-db.php');
 
         if ($is_pro) {
             $this->unhook_templates = ['wordpress_org_support', 'progress_upgrade', 'sidebar'];
@@ -80,10 +78,6 @@ class Properties
         $this->plugin_title       = ucwords(str_ireplace('-', ' ', basename($this->plugin_file_path)));
         $this->plugin_title       = str_ireplace(array('db', 'wp', '.php'), array('DB', 'WP', ''), $this->plugin_title);
 
-        $this->mu_plugin_dir    = (defined('WPMU_PLUGIN_DIR') && defined('WPMU_PLUGIN_URL')) ? WPMU_PLUGIN_DIR : trailingslashit(WP_CONTENT_DIR) . 'mu-plugins';
-        $this->mu_plugin_source = trailingslashit($this->plugin_dir_path) . 'compatibility/wp-migrate-db-pro-compatibility.php';
-        $this->mu_plugin_dest   = trailingslashit($this->mu_plugin_dir) . 'wp-migrate-db-pro-compatibility.php';
-
         // We need to set $this->plugin_slug here because it was set here
         // in Media Files prior to version 1.1.2. If we remove it the customer
         // cannot upgrade, view release notes, etc
@@ -91,7 +85,8 @@ class Properties
         $this->plugin_slug = basename($this->plugin_file_path, '.php');
 
         // used to add admin menus and to identify the core version in the $GLOBALS['wpmdb_meta'] variable for delicious brains api calls, version checking etc
-        $this->core_slug = $is_pro ? 'wp-migrate-db-pro' : 'wp-migrate-db';
+        // Always use 'wp-migrate-db' as the core slug for this fork
+        $this->core_slug = 'wp-migrate-db';
         $this->is_pro    = $is_pro;
 
         if (is_multisite()) {

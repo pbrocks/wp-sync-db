@@ -65,7 +65,7 @@ class PluginManager extends PluginManagerBase
      **/
     public function get_plugin_title()
     {
-        return __('WP Migrate Lite', 'wp-sync-db');
+        return __('WP Sync DB', 'wp-sync-db');
     }
 
      /**

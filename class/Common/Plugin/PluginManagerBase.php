@@ -275,9 +275,9 @@ class PluginManagerBase
     {
         if (false !== ($deactivated_notice_id = get_transient('wp_migrate_db_deactivated_notice_id'))) {
             if ('1' === $deactivated_notice_id) {
-                $message = __("WP Migrate Lite and WP Migrate cannot both be active. We've automatically deactivated WP Migrate Lite.", 'wp-sync-db');
+                $message = __("WP Sync DB and WP Migrate cannot both be active. We've automatically deactivated WP Sync DB.", 'wp-sync-db');
             } else {
-                $message = __("WP Migrate Lite and WP Migrate cannot both be active. We've automatically deactivated WP Migrate.", 'wp-sync-db');
+                $message = __("WP Sync DB and WP Migrate cannot both be active. We've automatically deactivated WP Migrate.", 'wp-sync-db');
             } ?>
 
             <div class="updated" style="border-left: 4px solid #ffba00;">

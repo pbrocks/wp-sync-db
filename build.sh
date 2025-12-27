@@ -21,7 +21,6 @@ mkdir -p dist
 
 # Copy files to build directory, excluding development files
 rsync -av \
-    --exclude='vendor/' \
     --exclude='.git/' \
     --exclude='node_modules/' \
     --exclude='build/' \
@@ -37,6 +36,8 @@ rsync -av \
     --exclude='.gitattributes' \
     --exclude='CLAUDE.md' \
     --exclude='build.sh' \
+    --exclude='version-lite.php' \
+    --exclude='compatibility/' \
     --exclude='*.zip' \
     . build/wp-sync-db/
 

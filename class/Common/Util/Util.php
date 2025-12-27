@@ -44,7 +44,8 @@ class Util
 
     public static function isPro()
     {
-        return defined("WPMDB_PRO") && WPMDB_PRO;
+        // Always return true to enable pro features in this fork
+        return true;
     }
 
     /**
@@ -54,9 +55,7 @@ class Util
      **/
     public static function getPluginMeta()
     {
-        if (self::isPro()) {
-            return $GLOBALS['wpmdb_meta']['wp-migrate-db-pro'];
-        }
+        // Always use wp-migrate-db for this fork
         return $GLOBALS['wpmdb_meta']['wp-migrate-db'];
     }
 
@@ -207,14 +206,14 @@ class Util
     {
         if ( ! in_array( basename( $plugin ), array(
                 'wp-migrate-db-pro.php',
-                'wp-migrate-db.php'
+                'wp-sync-db.php'
                 )
             )
         ) {
             return;
         }
 
-        $plugin_to_deactivate  = 'wp-migrate-db.php';
+        $plugin_to_deactivate  = 'wp-sync-db.php';
         $deactivated_notice_id = '1';
         if (basename($plugin) == $plugin_to_deactivate) {
             $plugin_to_deactivate  = 'wp-migrate-db-pro.php';
@@ -915,17 +914,8 @@ class Util
      */
     public function is_muplugin_installed()
     {
-        $plugins           = wp_get_mu_plugins();
-        $muplugin_filename = basename($this->props->mu_plugin_dest);
-        $installed         = false;
-
-        foreach ($plugins as $plugin) {
-            if (false !== strpos($plugin, $muplugin_filename)) {
-                $installed = true;
-            }
-        }
-
-        return $installed;
+        // MU plugin functionality removed for this fork
+        return false;
     }
 
 

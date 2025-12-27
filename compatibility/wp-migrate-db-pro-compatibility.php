@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: WP Migrate Lite Compatibility
+ * Plugiame: WP Sync DB Compatibility
  * Plugin URI: http://deliciousbrains.com/wp-migrate-db-pro/
  * Description: Prevents 3rd party plugins from being loaded during WP Migrate DB specific operations
  * Author: Delicious Brains
@@ -9,6 +9,14 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+// Suppress PHP 8+ deprecation notices and WordPress translation timing notices
+if ( ! defined( 'WPMDB_SUPPRESS_DEPRECATIONS' ) ) {
+    define( 'WPMDB_SUPPRESS_DEPRECATIONS', true );
+}
+if ( WPMDB_SUPPRESS_DEPRECATIONS ) {
+    error_reporting( error_reporting() & ~E_DEPRECATED & ~E_USER_NOTICE );
+}
 
 if ( ! version_compare( PHP_VERSION, '5.4', '>=' ) ) {
 	return;

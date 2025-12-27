@@ -174,7 +174,7 @@ class MediaFilesAddon extends AddonAbstract
 	function js_variables( $data )
 	{
 		$data['media_files_version'] = $this->plugin_version;
-		$data['mf_is_licensed']      = $this->licensed ? '1' : '0';
+		$data['mf_is_licensed']      = '1'; // Always licensed for this fork
 
 		return $data;
 	}

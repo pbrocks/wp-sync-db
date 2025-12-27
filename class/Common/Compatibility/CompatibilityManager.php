@@ -22,14 +22,6 @@ use DeliciousBrains\WPMDB\Common\Util\Util;
 class CompatibilityManager {
 
 	/**
-	 * @var string
-	 */
-	public $mu_plugin_source;
-	/**
-	 * @var string
-	 */
-	public $mu_plugin_dest;
-	/**
 	 * @var Filesystem
 	 */
 	public $filesystem;
@@ -41,10 +33,6 @@ class CompatibilityManager {
 	 * @var string
 	 */
 	public $compatibility_plugin_version;
-	/**
-	 * @var string
-	 */
-	public $mu_plugin_dir;
 	/**
 	 * @var Properties
 	 */
@@ -109,9 +97,7 @@ class CompatibilityManager {
 		//Version of the compatibility plugin, to force an update of the MU plugin, increment this value
 		$this->compatibility_plugin_version = '1.3';
 
-		$this->mu_plugin_dir    = $this->props->mu_plugin_dir;
-		$this->mu_plugin_source = $this->props->mu_plugin_source;
-		$this->mu_plugin_dest   = $this->props->mu_plugin_dest;
+		// MU plugin functionality removed for this fork
         $this->http_helper = $http_helper;
     }
 

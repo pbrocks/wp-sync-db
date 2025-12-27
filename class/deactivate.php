@@ -19,11 +19,11 @@ function wpmdb_get_active_plugins() {
  *
  */
 function wpmdb_deactivate_other_instances( $plugin ){
-	if ( ! in_array( basename( $plugin ), array( 'wp-migrate-db-pro.php', 'wp-migrate-db.php' ) ) ) {
+	if ( ! in_array( basename( $plugin ), array( 'wp-migrate-db-pro.php', 'wp-sync-db.php' ) ) ) {
 		return;
 	}
 
-	$plugin_to_deactivate  = 'wp-migrate-db.php';
+	$plugin_to_deactivate  = 'wp-sync-db.php';
 	$deactivated_notice_id = '1';
 	if ( basename( $plugin ) == $plugin_to_deactivate ) {
 		$plugin_to_deactivate  = 'wp-migrate-db-pro.php';
@@ -67,7 +67,7 @@ function wpmdb_deactivate_free_instance_after_migration( $type ) {
 			continue;
 		}
 
-		if ( $basename === 'wp-migrate-db.php' ) {
+		if ( $basename === 'wp-sync-db.php' ) {
 			$free_basename = $plugin;
 		}
 	}
