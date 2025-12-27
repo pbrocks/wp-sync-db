@@ -1,1 +1,3 @@
 .sass-cache
+/vendor-scoped
+.DS_Store
