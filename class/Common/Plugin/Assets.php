@@ -164,11 +164,13 @@ class  Assets
 
         // @TODO update when Multisite enabled and free version ready
         if ($this->util->isMDBPage() && Util::is_wp_compatible()) {
-            $assets_path = apply_filters('wpmdb_frontend_assets_path', WP_PLUGIN_DIR . '/wp-migrate-db' . $is_pro . '/frontend');
+            // $plugin_slug = basename(WPMDB_FILE);
+            $plugin_slug = basename(dirname(dirname(dirname(__DIR__))));
+            $assets_path = apply_filters('wpmdb_frontend_assets_path', WP_PLUGIN_DIR . '/' . $plugin_slug . '/frontend');
             \ReactWPScripts\enqueue_assets(
                 $assets_path,
                 [
-                    'base_url' => plugins_url('wp-migrate-db' . $is_pro . '/frontend'),
+                    'base_url' => plugins_url($plugin_slug . '/frontend'),
                     'key'      => 'mdb',
                 ]
             );
