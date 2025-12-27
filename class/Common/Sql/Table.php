@@ -524,7 +524,7 @@ class Table
                     }
 
                     foreach ($option_value as $plugin_key => $plugin) {
-                        if (0 === strpos($plugin, 'wp-migrate-db')) {
+                        if (0 === strpos($plugin, 'wp-sync-db')) {
                             $wpmdb_plugins[] = $plugin;
                         }
                     }
@@ -743,7 +743,7 @@ class Table
         }
 
         if (!$table_structure) {
-            $this->error_log->setError(sprintf(__('Failed to retrieve table structure for table \'%s\', please ensure your database is online. (#125)', 'wp-migrate-db'), $table));
+            $this->error_log->setError(sprintf(__('Failed to retrieve table structure for table \'%s\', please ensure your database is online. (#125)', 'wp-sync-db'), $table));
 
             return false;
         }
@@ -838,7 +838,7 @@ class Table
                 $create = $this->create_temp_table($table);
 
                 if (true !== $create) {
-                    $message = sprintf(__('Error creating temporary table. Table "%s" does not exist.', 'wp-migrate-db'), esc_html($table));
+                    $message = sprintf(__('Error creating temporary table. Table "%s" does not exist.', 'wp-sync-db'), esc_html($table));
 
                     return $this->http->end_ajax(
                         new \WP_Error(
@@ -889,7 +889,7 @@ class Table
         if ($is_backup) {
             $stow .= ("\n\n");
             $stow .= ("#\n");
-            $stow .= ('# ' . sprintf(__('Delete any existing table %s', 'wp-migrate-db'), $this->table_helper->backquote($table_to_stow)) . "\n");
+            $stow .= ('# ' . sprintf(__('Delete any existing table %s', 'wp-sync-db'), $this->table_helper->backquote($table_to_stow)) . "\n");
             $stow .= ("#\n");
             $stow .= ("\n");
         }
@@ -900,7 +900,7 @@ class Table
         if ($is_backup) {
             $stow .= ("\n\n");
             $stow .= ("#\n");
-            $stow .= ('# ' . sprintf(__('Table structure of table %s', 'wp-migrate-db'), $this->table_helper->backquote($table_to_stow)) . "\n");
+            $stow .= ('# ' . sprintf(__('Table structure of table %s', 'wp-sync-db'), $this->table_helper->backquote($table_to_stow)) . "\n");
             $stow .= ("#\n");
             $stow .= ("\n");
         }
@@ -908,7 +908,7 @@ class Table
         $create_table = $wpdb->get_results('SHOW CREATE TABLE ' . $this->table_helper->backquote($table), ARRAY_N);
 
         if (false === $create_table) {
-            $this->error_log->setError(__('Failed to generate the create table query, please ensure your database is online. (#126)', 'wp-migrate-db'));
+            $this->error_log->setError(__('Failed to generate the create table query, please ensure your database is online. (#126)', 'wp-sync-db'));
 
 			return false;
 		}
@@ -966,7 +966,7 @@ class Table
         if ($is_backup) {
             $this->stow("\n\n", false, $fp);
             $this->stow("#\n", false, $fp);
-            $this->stow('# ' . sprintf(__('Data contents of table %s', 'wp-migrate-db'), $this->table_helper->backquote($table_to_stow)) . "\n", false, $fp);
+            $this->stow('# ' . sprintf(__('Data contents of table %s', 'wp-sync-db'), $this->table_helper->backquote($table_to_stow)) . "\n", false, $fp);
             $this->stow("#\n", false, $fp);
         }
     }
@@ -1093,14 +1093,14 @@ class Table
             $is_full_site_export = isset($state_data['stages']) && json_decode($state_data['stages']) !== ['tables'] ? true : false;
             if (Util::gzip() && (isset($form_data['gzip_file']) && $form_data['gzip_file']) && !$is_full_site_export) {
                 if (!gzwrite($fp, $query_line)) {
-                    $this->error_log->setError(__('Failed to write the gzipped SQL data to the file. (#127)', 'wp-migrate-db'));
+                    $this->error_log->setError(__('Failed to write the gzipped SQL data to the file. (#127)', 'wp-sync-db'));
 
                     return false;
                 }
             } else {
                 // TODO: Use WP_Filesystem API.
                 if (false === @fwrite($fp, $query_line)) {
-                    $this->error_log->setError(__('Failed to write the SQL data to the file. (#128)', 'wp-migrate-db'));
+                    $this->error_log->setError(__('Failed to write the SQL data to the file. (#128)', 'wp-sync-db'));
 
                     return false;
                 }
@@ -1172,10 +1172,10 @@ class Table
                     $table = str_replace($this->props->temp_prefix, '', $table);
 
                     if ('import' === $context) {
-                        $message = sprintf(__('The imported table `%1s` contains characters which are invalid in the target schema.<br><br>If this is a WP Migrate export file, ensure that the `Compatible with older versions of MySQL` setting under `Advanced Options` is unchecked and try exporting again.<br><br> See&nbsp;<a href="%2s">our documentation</a> for more information.', 'wp-migrate-db'), $table, 'https://deliciousbrains.com/wp-migrate-db-pro/doc/invalid-text/#imports');
+                        $message = sprintf(__('The imported table `%1s` contains characters which are invalid in the target schema.<br><br>If this is a WP Migrate export file, ensure that the `Compatible with older versions of MySQL` setting under `Advanced Options` is unchecked and try exporting again.<br><br> See&nbsp;<a href="%2s">our documentation</a> for more information.', 'wp-sync-db'), $table, 'https://deliciousbrains.com/wp-migrate-db-pro/doc/invalid-text/#imports');
                         $return  = new WP_Error('import_sql_execution_failed', $message);
                     } else {
-                        $message = sprintf(__('The table `%1s` contains characters which are invalid in the target database. See&nbsp;<a href="%2s" target="_blank">our documentation</a> for more information.', 'wp-migrate-db'), $table, 'https://deliciousbrains.com/wp-migrate-db-pro/doc/invalid-text/');
+                        $message = sprintf(__('The table `%1s` contains characters which are invalid in the target database. See&nbsp;<a href="%2s" target="_blank">our documentation</a> for more information.', 'wp-sync-db'), $table, 'https://deliciousbrains.com/wp-migrate-db-pro/doc/invalid-text/');
 
                         return $message;
                     }
@@ -1745,7 +1745,7 @@ class Table
                         return $this->http->end_ajax(
                             new \WP_Error(
                                 'wpmdb-error-moving-sql-file',
-                                __('Error moving SQL file into ZIP archive', 'wp-migrate-db')
+                                __('Error moving SQL file into ZIP archive', 'wp-sync-db')
                             )
                         );
                     }
@@ -1840,7 +1840,7 @@ class Table
 
         $stow = "\n";
         $stow .= "#\n";
-        $stow .= '# ' . sprintf(__('End of data contents of table %s', 'wp-migrate-db'), $this->table_helper->backquote($target_table_name)) . "\n";
+        $stow .= '# ' . sprintf(__('End of data contents of table %s', 'wp-sync-db'), $this->table_helper->backquote($target_table_name)) . "\n";
         $stow .= "# --------------------------------------------------------\n";
         $stow .= "\n";
         $this->stow($stow, false, $fp);
@@ -1919,7 +1919,7 @@ class Table
 	    if ( empty( $prefix ) ) {
 		    return new WP_Error(
 			    'missing-temp-prefix',
-			    __( 'Temporary table prefix not supplied when trying to delete temporary tables.', 'wp-migrate-db' )
+			    __( 'Temporary table prefix not supplied when trying to delete temporary tables.', 'wp-sync-db' )
 		    );
 	    }
 
@@ -1972,11 +1972,11 @@ class Table
         global $wpdb;
 
         $charset = (defined('DB_CHARSET') ? DB_CHARSET : 'utf8');
-        $this->stow('# ' . __('WordPress MySQL database migration', 'wp-migrate-db') . "\n", false, $fp);
+        $this->stow('# ' . __('WordPress MySQL database migration', 'wp-sync-db') . "\n", false, $fp);
         $this->stow("#\n", false, $fp);
-        $this->stow('# ' . sprintf(__('Generated: %s', 'wp-migrate-db'), date('l j. F Y H:i T')) . "\n", false, $fp);
-        $this->stow('# ' . sprintf(__('Hostname: %s', 'wp-migrate-db'), DB_HOST) . "\n", false, $fp);
-        $this->stow('# ' . sprintf(__('Database: %s', 'wp-migrate-db'), $this->table_helper->backquote(DB_NAME)) . "\n", false, $fp);
+        $this->stow('# ' . sprintf(__('Generated: %s', 'wp-sync-db'), date('l j. F Y H:i T')) . "\n", false, $fp);
+        $this->stow('# ' . sprintf(__('Hostname: %s', 'wp-sync-db'), DB_HOST) . "\n", false, $fp);
+        $this->stow('# ' . sprintf(__('Database: %s', 'wp-sync-db'), $this->table_helper->backquote(DB_NAME)) . "\n", false, $fp);
 
         $home_url = apply_filters('wpmdb_backup_header_url', Util::home_url());
         $url      = preg_replace('(^https?:)', '', $home_url, 1);

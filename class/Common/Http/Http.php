@@ -87,7 +87,7 @@ class Http
                     return wp_send_json_error($json['msg']);
                 }
 
-                return wp_send_json_error(sprintf(__('An error occurred - JSON response: %s', 'wp-migrate-db'), $json));
+                return wp_send_json_error(sprintf(__('An error occurred - JSON response: %s', 'wp-sync-db'), $json));
             }
         }
 
@@ -129,14 +129,14 @@ class Http
         $result = Util::check_ajax_referer($action, 'nonce', false);
 
         if (false === $result) {
-            return $this->end_ajax(new \WP_Error('wpmdb_invalid_nonce', sprintf(__('Invalid nonce for: %s', 'wp-migrate-db'), $action)));
+            return $this->end_ajax(new \WP_Error('wpmdb_invalid_nonce', sprintf(__('Invalid nonce for: %s', 'wp-sync-db'), $action)));
         }
 
         $cap = (is_multisite()) ? 'manage_network_options' : 'export';
         $cap = apply_filters('wpmdb_ajax_cap', $cap);
 
         if (!current_user_can($cap)) {
-            $return = array('wpmdb_error' => 1, 'body' => sprintf(__('Access denied for: %s', 'wp-migrate-db'), $action));
+            $return = array('wpmdb_error' => 1, 'body' => sprintf(__('Access denied for: %s', 'wp-sync-db'), $action));
             $this->end_ajax(json_encode($return));
         }
     }

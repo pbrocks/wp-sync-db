@@ -69,7 +69,7 @@ class Connection extends Connections\DatabaseConnection {
             } else {
                 return new WP_Error(
                     'invalid-queue-job',
-                    __('An invalid item was found in the queue of files to be transferred.', 'wp-migrate-db')
+                    __('An invalid item was found in the queue of files to be transferred.', 'wp-sync-db')
                 );
             }
 		}

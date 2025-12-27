@@ -152,8 +152,8 @@ class Multisite
 
 	public function mst_required_message($intent)
 	{
-        $local              = __('single site', 'wp-migrate-db');
-        $remote             = __('multisite', 'wp-migrate-db');
+        $local              = __('single site', 'wp-sync-db');
+        $remote             = __('multisite', 'wp-sync-db');
         $local_is_multisite = false;
         $action             = '';
         $msg                = '';
@@ -161,7 +161,7 @@ class Multisite
         $plugin_ids         = array_keys(get_plugins());
         $mst_addon          = sprintf('<a href="%s">%s</a>',
             'https://deliciousbrains.com/wp-migrate-db-pro/doc/multisite-tools-addon/',
-            __('Multisite Tools upgrade', 'wp-migrate-db')
+            __('Multisite Tools upgrade', 'wp-sync-db')
         );
         $import_msg         = sprintf(__('It looks like the file you are trying to import is from a multisite install and this install is a single site. To run this type of import you\'ll need to use the %s to export a subsite as a single site. <a href="%s" target="_blank">Learn more »</a>',
             'wp-migrate-db'),
@@ -169,13 +169,13 @@ class Multisite
             'https://deliciousbrains.com/wp-migrate-db-pro/doc/multisite-tools-addon/#export-subsite'
         );
 
-        $replace_single = sprintf('<a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/multisite-tools-addon/#replace-single-site-multisite" target="_blank">%s</a>', __('Learn more about replacing a single site with a multisite network', 'wp-migrate-db'));
-        $replace_multisite = sprintf('<a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/multisite-tools-addon/#replace-multisite-single-site" target="_blank">%s</a>', __('Learn more about replacing a multisite network with a single site', 'wp-migrate-db'));
+        $replace_single = sprintf('<a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/multisite-tools-addon/#replace-single-site-multisite" target="_blank">%s</a>', __('Learn more about replacing a single site with a multisite network', 'wp-sync-db'));
+        $replace_multisite = sprintf('<a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/multisite-tools-addon/#replace-multisite-single-site" target="_blank">%s</a>', __('Learn more about replacing a multisite network with a single site', 'wp-sync-db'));
 
         if ( is_multisite() ) {
             $local_is_multisite = true;
-            $local              = __('multisite', 'wp-migrate-db');
-            $remote             = __('single site', 'wp-migrate-db');
+            $local              = __('multisite', 'wp-sync-db');
+            $remote             = __('single site', 'wp-sync-db');
             $import_msg         = sprintf(__('It looks like the file you are trying to import is from a single site install and this install is a multisite. This type of migration isn\'t currently supported. <a href="%s" target="_blank">Learn more »</a>',
                 'wp-migrate-db'),
                 'https://deliciousbrains.com/wp-migrate-db-pro/doc/multisite-tools-addon/'
@@ -185,9 +185,9 @@ class Multisite
 		if ( in_array( $plugin_file, $plugin_ids ) ) {
 			if ( !is_plugin_active( $plugin_file ) ) {
 				$url    = wp_nonce_url( network_admin_url( 'plugins.php?action=activate&amp;plugin=wp-migrate-db-pro-multisite-tools/wp-migrate-db-pro-multisite-tools.php' ), 'activate-plugin_wp-migrate-db-pro-multisite-tools/wp-migrate-db-pro-multisite-tools.php' );
-				$action = sprintf( '[<a href="%s">%s</a>]', $url, __( 'Activate', 'wp-migrate-db' ) );
+				$action = sprintf( '[<a href="%s">%s</a>]', $url, __( 'Activate', 'wp-sync-db' ) );
 			} else {
-				$msg = sprintf( __( 'It looks like the remote site is a %s install and this install is a %s. To run this type of migration you\'ll need the %s activated on the <strong>remote</strong> site.', 'wp-migrate-db' ),
+				$msg = sprintf( __( 'It looks like the remote site is a %s install and this install is a %s. To run this type of migration you\'ll need the %s activated on the <strong>remote</strong> site.', 'wp-sync-db' ),
 					$remote,
 					$local,
 					$mst_addon
@@ -201,10 +201,10 @@ class Multisite
 
 				if ( isset( $license_response->addons_available ) && '0' !== $license_response->addons_available ) {
 					$url    = wp_nonce_url( network_admin_url( 'update.php?action=install-plugin&plugin=wp-migrate-db-pro-multisite-tools' ), 'install-plugin_wp-migrate-db-pro-multisite-tools' );
-					$action = sprintf( '[<a href="%s">%s</a>]', $url, __( 'Install', 'wp-migrate-db' ) );
+					$action = sprintf( '[<a href="%s">%s</a>]', $url, __( 'Install', 'wp-sync-db' ) );
 				} else {
 					$url    = 'https://deliciousbrains.com/my-account/?utm_campaign=support%2Bdocs&utm_source=MDB%2BPaid&utm_medium=insideplugin';
-					$action = sprintf( '[<a href="%s" target="_blank">%s</a>]', $url, __( 'Upgrade your license', 'wp-migrate-db' ) );
+					$action = sprintf( '[<a href="%s" target="_blank">%s</a>]', $url, __( 'Upgrade your license', 'wp-sync-db' ) );
 				}
 			}
 		}

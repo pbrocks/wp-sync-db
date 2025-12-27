@@ -198,7 +198,7 @@ class Cli
 				if (isset($assoc_args['import-file'])) {
 					$this->profile['import_file'] = $assoc_args['import-file'];
 				} else {
-					return $this->cli_error(__('Missing path to import file. Use --import-file=/path/to/import.sql.gz', 'wp-migrate-db'));
+					return $this->cli_error(__('Missing path to import file. Use --import-file=/path/to/import.sql.gz', 'wp-sync-db'));
 				}
 			}
 		}
@@ -506,7 +506,7 @@ class Cli
 		}
 
 		if (empty($tables) && !$this->is_non_database_migration($this->profile)) {
-			return $this->cli_error(__('No tables selected for migration.', 'wp-migrate-db'));
+			return $this->cli_error(__('No tables selected for migration.', 'wp-sync-db'));
 		}
 
 		$table_rows = $this->get_row_counts_from_table_list($tables, $stage_iterator);
@@ -710,7 +710,7 @@ class Cli
 			if (file_exists($temp_file) && rename($temp_file, $dest_file)) {
 				$response = $dest_file;
 			} else {
-				$response = $this->cli_error(__('Unable to move exported file.', 'wp-migrate-db'));
+				$response = $this->cli_error(__('Unable to move exported file.', 'wp-sync-db'));
 			}
 		}
 

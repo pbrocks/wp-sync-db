@@ -84,11 +84,11 @@ class BackupExport
             $dump_file = $this->filesystem->get_upload_info('path') . DIRECTORY_SEPARATOR . $dump_file;
 
         if (empty($dump_file) || false === $this->filesystem->file_exists($dump_file)) {
-            return $this->http->end_ajax(new \WP_Error('wp-migrate-db-export-not-found', __('MySQL export file not found.', 'wp-migrate-db')));
+            return $this->http->end_ajax(new \WP_Error('wp-migrate-db-export-not-found', __('MySQL export file not found.', 'wp-sync-db')));
         }
 
         if (false === $this->filesystem->unlink($dump_file)) {
-            return $this->http->end_ajax(new \WP_Error('wp-migrate-db-export-not-found', __('Could not delete the MySQL export file.', 'wp-migrate-db')));
+            return $this->http->end_ajax(new \WP_Error('wp-migrate-db-export-not-found', __('Could not delete the MySQL export file.', 'wp-sync-db')));
         }
 
         return null;

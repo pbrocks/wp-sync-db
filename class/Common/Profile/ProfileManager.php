@@ -372,7 +372,7 @@ class ProfileManager
         $existing_profiles = get_site_option('wpmdb_recent_migrations');
 
         if (empty($existing_profiles)) {
-            return wp_send_json_error(__('No recent migrations', 'wp-migrate-db'));
+            return wp_send_json_error(__('No recent migrations', 'wp-sync-db'));
         }
 
         unset($existing_profiles[$state_data['id']]);
@@ -398,7 +398,7 @@ class ProfileManager
         $saved_profiles = get_site_option('wpmdb_saved_profiles');
 
         if (empty($saved_profiles) || !\is_array($saved_profiles)) {
-            return wp_send_json_error(__('Profile not found.', 'wp-migrate-db'));
+            return wp_send_json_error(__('Profile not found.', 'wp-sync-db'));
         }
 
         $profile_key = 0;
@@ -411,7 +411,7 @@ class ProfileManager
         unset($saved_profiles[$profile_key]);
         update_site_option('wpmdb_saved_profiles', $saved_profiles);
 
-        return wp_send_json_success(__('Profile removed', 'wp-migrate-db'));
+        return wp_send_json_success(__('Profile removed', 'wp-sync-db'));
     }
 
     public function rename_profile()
@@ -431,7 +431,7 @@ class ProfileManager
         $saved_profiles = get_site_option('wpmdb_saved_profiles');
 
         if (empty($saved_profiles) || !\is_array($saved_profiles)) {
-            return wp_send_json_error(__('Profile not found.', 'wp-migrate-db'));
+            return wp_send_json_error(__('Profile not found.', 'wp-sync-db'));
         }
 
         $profile_key = 0;
@@ -445,7 +445,7 @@ class ProfileManager
 
         update_site_option('wpmdb_saved_profiles', $saved_profiles);
 
-        return wp_send_json_success(__('Profile saved', 'wp-migrate-db'));
+        return wp_send_json_success(__('Profile saved', 'wp-sync-db'));
     }
 
     public function overwrite_profile()
@@ -465,7 +465,7 @@ class ProfileManager
         $saved_profiles = get_site_option('wpmdb_saved_profiles');
 
         if (empty($saved_profiles) || !\is_array($saved_profiles)) {
-            return wp_send_json_error(__('Profile not found.', 'wp-migrate-db'));
+            return wp_send_json_error(__('Profile not found.', 'wp-sync-db'));
         }
 
         $profile_key = 0;
@@ -486,7 +486,7 @@ class ProfileManager
 
         update_site_option('wpmdb_saved_profiles', $saved_profiles);
 
-        return wp_send_json_success(__('Profile saved', 'wp-migrate-db'));
+        return wp_send_json_success(__('Profile saved', 'wp-sync-db'));
     }
 
     public function load_profile()
@@ -528,7 +528,7 @@ class ProfileManager
         $state_data = Sanitize::sanitize_data($_POST, $key_rules, $context);
 
         if (empty($state_data)) {
-            return new \WP_Error('profile-save-failed', sprintf(__('Failed to %s profile, state data is empty.', 'wp-migrate-db'), $action));
+            return new \WP_Error('profile-save-failed', sprintf(__('Failed to %s profile, state data is empty.', 'wp-sync-db'), $action));
         }
 
         return $state_data;
@@ -676,7 +676,7 @@ class ProfileManager
         $saved_profiles = get_site_option($profile_type);
 
         if (empty($saved_profiles) || !\is_array($saved_profiles)) {
-            return new \WP_Error('wpmdb_profile_not_found', __('Profile not found.', 'wp-migrate-db'));
+            return new \WP_Error('wpmdb_profile_not_found', __('Profile not found.', 'wp-sync-db'));
         }
 
         $profile_key = null;
@@ -688,7 +688,7 @@ class ProfileManager
         }
 
         if (!isset($saved_profiles[$profile_key])) {
-            return new \WP_Error('wpmdb_profile_not_found', __('Profile not found.', 'wp-migrate-db'));
+            return new \WP_Error('wpmdb_profile_not_found', __('Profile not found.', 'wp-sync-db'));
         }
 
         $the_profile = $saved_profiles[$profile_key];

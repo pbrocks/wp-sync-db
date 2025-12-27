@@ -51,6 +51,11 @@ class Addon
         $this->setAddons();
     }
 
+    /**
+     * Get the list of registered addons
+     *
+     * @return array List of addons with their required versions
+     */
     public function getAddons()
     {
         return $this->addons;
@@ -58,6 +63,11 @@ class Addon
 
     /**
      * Set versions of Addons required for this version of WP Migrate DB Pro
+     *
+     * Defines the minimum compatible versions for each addon that can
+     * be used with the current version of the core plugin.
+     *
+     * @return void
      */
     public function setAddons()
     {
@@ -81,6 +91,13 @@ class Addon
         );
     }
 
+    /**
+     * Register addon-related hooks and set up addon data
+     *
+     * Initializes the addon list and allows filtering of temporary table prefix.
+     *
+     * @return void
+     */
     public function register()
     {
         $this->setAddons();
@@ -89,6 +106,16 @@ class Addon
         $this->props->temp_prefix = apply_filters('wpmdb_temporary_prefix', $this->props->temp_prefix);
     }
 
+    /**
+     * Check if an addon version is outdated
+     *
+     * Compares the installed version of an addon against the minimum required
+     * version defined in the addons array.
+     *
+     * @param string $addon_basename The basename of the addon plugin (e.g., 'wp-migrate-db-pro-cli/wp-migrate-db-pro-cli.php')
+     *
+     * @return bool True if the addon is outdated, false otherwise
+     */
     public function is_addon_outdated($addon_basename)
     {
         $addon_slug = current(explode('/', $addon_basename));
@@ -104,6 +131,15 @@ class Addon
         return version_compare($installed_version, $required_version, '<');
     }
 
+    /**
+     * Get the plugin name from WordPress plugin data
+     *
+     * Retrieves the human-readable plugin name from the plugin headers.
+     *
+     * @param string|false $plugin Optional. Plugin basename. Defaults to the current plugin.
+     *
+     * @return string|false The plugin name or false if not found or not in admin
+     */
     public function get_plugin_name($plugin = false)
     {
         if (!is_admin()) {
@@ -121,6 +157,16 @@ class Addon
         return $plugins[$plugin_basename]['Name'];
     }
 
+    /**
+     * Get the latest available version for a plugin
+     *
+     * Retrieves the latest stable or beta version from the upgrade data API.
+     * Beta versions are only returned if the user has opted in to beta updates.
+     *
+     * @param string $slug The plugin slug
+     *
+     * @return string|false The latest version number or false if not available
+     */
     public function get_latest_version($slug)
     {
         if ( ! Util::isPro()) {
@@ -162,6 +208,14 @@ class Addon
         return $data[$slug]['beta_version'];
     }
 
+    /**
+     * Get upgrade data from the Delicious Brains API
+     *
+     * Retrieves version information for all addons from the API, with caching
+     * via transients. Falls back to current version if API request fails.
+     *
+     * @return array|false Array of upgrade data or false on error
+     */
     public function get_upgrade_data()
     {
         $api  = WPMDBDI::getInstance()->get('api');

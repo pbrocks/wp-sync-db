@@ -115,6 +115,13 @@ class CompatibilityManager {
         $this->http_helper = $http_helper;
     }
 
+	/**
+	 * Register hooks for compatibility plugin management
+	 *
+	 * Sets up actions to check/update the MU plugin and handle deactivation.
+	 *
+	 * @return void
+	 */
 	public function register() {
 		// Checks the compatibility mode MU plugin version and updates if it's out of date.
 		add_action( 'admin_init', array( $this, 'muplugin_version_check' ), 1 );
@@ -123,6 +130,13 @@ class CompatibilityManager {
 		add_action( 'wp_migrate_db_remove_compatibility_plugin', array( $this, 'remove_muplugin_on_deactivation' ) );
 	}
 
+	/**
+	 * Register notice filters
+	 *
+	 * Adds filter to display MU plugin update failure warnings.
+	 *
+	 * @return void
+	 */
 	public function addNotices(){
         add_filter('wpmdb_notification_strings', array($this, 'template_muplugin_update_fail'));
     }
@@ -137,7 +151,7 @@ class CompatibilityManager {
 	 * @return bool|string
 	 */
 	public function muplugin_version_check() {
-		if ( isset( $_GET['page'] ) && in_array( $_GET['page'], array( 'wp-migrate-db-pro', 'wp-migrate-db' ) ) ) {
+		if ( isset( $_GET['page'] ) && in_array( $_GET['page'], array( 'wp-migrate-db-pro', 'wp-sync-db' ) ) ) {
 			if ( true === $this->is_muplugin_update_required() ) {
 				return $this->copy_muplugin();
 			}
@@ -171,7 +185,14 @@ class CompatibilityManager {
 	}
 
 	/**
-	 * Preemptively shows a warning warning on WPMDB pages if the mu-plugins folder isn't writable
+	 * Display warning on WPMDB pages if mu-plugins folder isn't writable
+	 *
+	 * Proactively shows a warning if the MU plugin needs updating but the
+	 * mu-plugins directory is not writable.
+	 *
+	 * @param array $notifications Array of notification strings
+	 *
+	 * @return array Modified notifications array
 	 */
 	function template_muplugin_update_fail($notifications) {
 		if ( $this->is_muplugin_update_required() && false === $this->util->is_muplugin_writable() ) {
@@ -199,7 +220,7 @@ class CompatibilityManager {
 		$wpmdb_settings = $this->settings;
 
 		if ( ! $this->filesystem->mkdir( $this->mu_plugin_dir ) || ! $this->filesystem->copy( $this->mu_plugin_source, $this->mu_plugin_dest ) ) {
-			return sprintf( __( 'The compatibility plugin could not be activated because your mu-plugin directory is currently not writable.  Please update the permissions of the mu-plugins folder:  %s', 'wp-migrate-db' ), $this->mu_plugin_dir );
+			return sprintf( __( 'The compatibility plugin could not be activated because your mu-plugin directory is currently not writable.  Please update the permissions of the mu-plugins folder:  %s', 'wp-sync-db' ), $this->mu_plugin_dir );
 		}
 
 		//Rename muplugin in header
@@ -232,7 +253,7 @@ class CompatibilityManager {
 	 */
 	public function remove_muplugin() {
 		if ( $this->filesystem->file_exists( $this->mu_plugin_dest ) && ! $this->filesystem->unlink( $this->mu_plugin_dest ) ) {
-			return sprintf( __( 'The compatibility plugin could not be deactivated because your mu-plugin directory is currently not writable.  Please update the permissions of the mu-plugins folder: %s', 'wp-migrate-db' ), $this->mu_plugin_dir );
+			return sprintf( __( 'The compatibility plugin could not be deactivated because your mu-plugin directory is currently not writable.  Please update the permissions of the mu-plugins folder: %s', 'wp-sync-db' ), $this->mu_plugin_dir );
 		}
 
 		return true;

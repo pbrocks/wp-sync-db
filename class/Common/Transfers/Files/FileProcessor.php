@@ -326,7 +326,7 @@ class FileProcessor
         $abs_path = $file['absolute_path'];
 
         if (!file_exists($abs_path)) {
-            return $this->http->end_ajax(new \WP_Error('wpmdb-file-does-not-exist', sprintf(__('File %s does not exist', 'wp-migrate-db'), $abs_path)));
+            return $this->http->end_ajax(new \WP_Error('wpmdb-file-does-not-exist', sprintf(__('File %s does not exist', 'wp-sync-db'), $abs_path)));
         }
 
         $timestamp = $date->getTimestamp();

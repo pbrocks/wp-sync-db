@@ -87,7 +87,7 @@ class MigrationStateManager
     public function save_migration_state($state, $default = null, $migration_id = null)
     {
         if (! $this->migration_state->set($state, $migration_id)) {
-            $error_msg = __('Failed to save migration state. Please contact support.', 'wp-migrate-db');
+            $error_msg = __('Failed to save migration state. Please contact support.', 'wp-sync-db');
             $default   = array('wpmdb_error' => 1, 'body' => $error_msg);
             $this->error_log->log_error($error_msg);
         }
@@ -121,7 +121,7 @@ class MigrationStateManager
             $this->migration_state = new MigrationState($id);
             $state                 = $this->migration_state->get();
             if (empty($state) || $this->migration_state->id() !== $id) {
-                $error_msg = __('Failed to retrieve migration state. Please contact support.', 'wp-migrate-db');
+                $error_msg = __('Failed to retrieve migration state. Please contact support.', 'wp-sync-db');
                 $return    = array('wpmdb_error' => 1, 'body' => $error_msg);
                 $this->error_log->log_error($error_msg);
                 $return = $this->http->end_ajax(json_encode($return));

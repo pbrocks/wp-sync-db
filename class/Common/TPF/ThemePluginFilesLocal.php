@@ -175,7 +175,7 @@ class ThemePluginFilesLocal
         $state_data = Persistence::setPostData($key_rules, __METHOD__);
         $current_option = $state_data[$state_data['stage']. '_option'];
         if (empty($state_data['folders']) && $current_option !== 'except' ) {
-            return $this->transfer_util->ajax_error(__('Error: empty folder list supplied.', 'wp-migrate-db'));
+            return $this->transfer_util->ajax_error(__('Error: empty folder list supplied.', 'wp-sync-db'));
         }
 
         $excludes = isset($state_data[$state_data['stage']. '_excludes']) ? trim($state_data[$state_data['stage']. '_excludes'], '" \t\n\r\0\x0B') : [];
@@ -191,7 +191,7 @@ class ThemePluginFilesLocal
         $files = $state_data['folders'];
 
         if (!is_array($files)) {
-            return $this->transfer_util->ajax_error(__('Invalid folder list supplied (invalid array)', 'wp-migrate-db'));
+            return $this->transfer_util->ajax_error(__('Invalid folder list supplied (invalid array)', 'wp-sync-db'));
         }
 
         // @TODO this needs to be implemented for remotes on a pull

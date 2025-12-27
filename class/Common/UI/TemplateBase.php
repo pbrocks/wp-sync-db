@@ -199,17 +199,17 @@ class TemplateBase
     {
         ob_start();
         ?>
-		<h4><?php _e("Warning: Mixed Case Table Names", 'wp-migrate-db'); ?></h4>
+		<h4><?php _e("Warning: Mixed Case Table Names", 'wp-sync-db'); ?></h4>
 
         <?php if ('pull' === $migration_type) : ?>
-		<p><?php _e("Whoa! We've detected that your <b>local</b> site has the MySQL setting <code>lower_case_table_names</code> set to <code>1</code>.", 'wp-migrate-db'); ?></p>
+		<p><?php _e("Whoa! We've detected that your <b>local</b> site has the MySQL setting <code>lower_case_table_names</code> set to <code>1</code>.", 'wp-sync-db'); ?></p>
     <?php else : ?>
-		<p><?php _e("Whoa! We've detected that your <b>remote</b> site has the MySQL setting <code>lower_case_table_names</code> set to <code>1</code>.", 'wp-migrate-db'); ?></p>
+		<p><?php _e("Whoa! We've detected that your <b>remote</b> site has the MySQL setting <code>lower_case_table_names</code> set to <code>1</code>.", 'wp-sync-db'); ?></p>
     <?php endif; ?>
 
-		<p><?php _e("As a result, uppercase characters in table names will be converted to lowercase during the migration.", 'wp-migrate-db'); ?></p>
+		<p><?php _e("As a result, uppercase characters in table names will be converted to lowercase during the migration.", 'wp-sync-db'); ?></p>
 
-		<p><?php printf(__('You can read more about this in <a href="%s">our documentation</a>, proceed with caution.', 'wp-migrate-db'), 'https://deliciousbrains.com/wp-migrate-db-pro/doc/mixed-case-table-names/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin'); ?></p>
+		<p><?php printf(__('You can read more about this in <a href="%s">our documentation</a>, proceed with caution.', 'wp-sync-db'), 'https://deliciousbrains.com/wp-migrate-db-pro/doc/mixed-case-table-names/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin'); ?></p>
         <?php
         return wptexturize(ob_get_clean());
     }

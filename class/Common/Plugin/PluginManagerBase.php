@@ -275,9 +275,9 @@ class PluginManagerBase
     {
         if (false !== ($deactivated_notice_id = get_transient('wp_migrate_db_deactivated_notice_id'))) {
             if ('1' === $deactivated_notice_id) {
-                $message = __("WP Migrate Lite and WP Migrate cannot both be active. We've automatically deactivated WP Migrate Lite.", 'wp-migrate-db');
+                $message = __("WP Migrate Lite and WP Migrate cannot both be active. We've automatically deactivated WP Migrate Lite.", 'wp-sync-db');
             } else {
-                $message = __("WP Migrate Lite and WP Migrate cannot both be active. We've automatically deactivated WP Migrate.", 'wp-migrate-db');
+                $message = __("WP Migrate Lite and WP Migrate cannot both be active. We've automatically deactivated WP Migrate.", 'wp-sync-db');
             } ?>
 
             <div class="updated" style="border-left: 4px solid #ffba00;">
@@ -366,7 +366,7 @@ class PluginManagerBase
         if (false === $_POST) {
             $this->http->end_ajax(new \WP_Error(
                 'wpmdb-process-link-ajax-failed',
-                __('AJAX request failed', 'wp-migrate-db')
+                __('AJAX request failed', 'wp-sync-db')
             ));
         }
 
@@ -385,7 +385,7 @@ class PluginManagerBase
 
     public function get_plugin_title()
     {
-        return __('WP Migrate', 'wp-migrate-db');
+        return __('WP Migrate', 'wp-sync-db');
     }
 
 
@@ -488,7 +488,7 @@ class PluginManagerBase
         }
         return sprintf(
             /* translators: %1$s is a link to WP Migrate's website, and %2$s is a link to WP Engine's website. */
-            __('%1$s is developed and maintained by %2$s.', 'wp-migrate-db'),
+            __('%1$s is developed and maintained by %2$s.', 'wp-sync-db'),
             $product_link,
             $wpe_link
         );

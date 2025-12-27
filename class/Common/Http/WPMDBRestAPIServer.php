@@ -23,7 +23,7 @@ class WPMDBRestAPIServer {
 
 		// Restrict endpoint to only users who have the edit_posts capability.
 		if ( ! current_user_can( $cap ) ) {
-			return new \WP_Error( 'rest_forbidden', esc_html__( 'Only authenticated users can access endpoint.', 'wp-migrate-db' ), [ 'status' => 401 ] );
+			return new \WP_Error( 'rest_forbidden', esc_html__( 'Only authenticated users can access endpoint.', 'wp-sync-db' ), [ 'status' => 401 ] );
 		}
 
 		return true;

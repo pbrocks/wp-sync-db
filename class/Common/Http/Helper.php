@@ -103,7 +103,7 @@ class Helper
 			self::$http->end_ajax(
 				new \WP_Error(
 					'wpmdb-convert-json-post-error',
-					__('Invalid Request. Did you pass the correct nonce?', 'wp-migrate-db')
+					__('Invalid Request. Did you pass the correct nonce?', 'wp-sync-db')
 				)
 			);
 		}

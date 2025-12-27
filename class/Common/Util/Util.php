@@ -205,7 +205,12 @@ class Util
      */
     public static function deactivate_other_instances($plugin)
     {
-        if (!in_array(basename($plugin), array('wp-migrate-db-pro.php', 'wp-migrate-db.php'))) {
+        if ( ! in_array( basename( $plugin ), array(
+                'wp-migrate-db-pro.php',
+                'wp-migrate-db.php'
+                )
+            )
+        ) {
             return;
         }
 
@@ -252,9 +257,9 @@ class Util
         // Because we support PHP versions less than 7.0 we need to use the polyfill.
         $unserialized_string = @Unserialize::unserialize($serialized_string, array('allowed_classes' => false));
 
-        if (false === $unserialized_string && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
-            $scope = $method ? sprintf(__('Scope: %s().', 'wp-migrate-db'), $method) : false;
-            $error = sprintf(__('WPMDB Error: Data cannot be unserialized. %s', 'wp-migrate-db'), $scope);
+        if ( false === $unserialized_string && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+            $scope = $method ? sprintf( __( 'Scope: %s().', 'wp-sync-db' ), $method ) : false;
+            $error = sprintf( __( 'WPMDB Error: Data cannot be unserialized. %s', 'wp-sync-db' ), $scope);
             error_log($error);
         }
 
@@ -1051,9 +1056,9 @@ class Util
         }
 
         if (!empty($sites)) {
-            foreach ((array)$sites as $subsite) {
-                $subsite                       = (array)$subsite;
-                $subsites[$subsite['blog_id']] = $this->simple_site_url(get_blogaddress_by_id($subsite['blog_id']));
+            foreach ( ( array )$sites as $subsite ) {
+                $subsite                         = (array)$subsite;
+                $subsites[ $subsite['blog_id'] ] = $this->simple_site_url( get_blogaddress_by_id( $subsite['blog_id'] ) );
             }
         }
 

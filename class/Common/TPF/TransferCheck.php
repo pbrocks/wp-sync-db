@@ -55,7 +55,7 @@ class TransferCheck {
 
 			return $this->http->end_ajax( json_encode( [
 				'wpmdb_error' => 1,
-				'body'        => __( 'A problem occurred starting the Themes & Plugins migration.', 'wp-migrate-db' ),
+				'body'        => __( 'A problem occurred starting the Themes & Plugins migration.', 'wp-sync-db' ),
 			] ) );
 		}
 
@@ -70,9 +70,9 @@ class TransferCheck {
 
 		$tmp_folder_error_message = isset( $site_details['local_tmp_folder_check']['message'] ) ? $site_details['local_tmp_folder_check']['message'] : '';
 
-		$error_message = __( 'Unfortunately it looks like we can\'t migrate your themes or plugins. However, running a migration without themes and plugins should work. Please uncheck the Themes checkbox, uncheck the Plugins checkbox, and try your migration again.', 'wp-migrate-db' );
+		$error_message = __( 'Unfortunately it looks like we can\'t migrate your themes or plugins. However, running a migration without themes and plugins should work. Please uncheck the Themes checkbox, uncheck the Plugins checkbox, and try your migration again.', 'wp-sync-db' );
 		$link          = 'https://deliciousbrains.com/wp-migrate-db-pro/doc/theme-plugin-files-errors/';
-		$more          = __( 'More Details »', 'wp-migrate-db' );
+		$more          = __( 'More Details »', 'wp-sync-db' );
 
 		$message = sprintf( '<p class="t-p-error">%s</p><p class="t-p-error">%s <a href="%s" target="_blank">%s</a></p>', $error_message, $tmp_folder_error_message, $link, $more );
 

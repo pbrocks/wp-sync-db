@@ -188,7 +188,7 @@ class MediaFilesLocal
         $timezone = !empty($state_data['timezone']) ? $state_data['timezone'] : 'UTC';
 
         if (empty($folder)) {
-            return $this->transfer_util->ajax_error(__('Invalid folder path supplied.', 'wp-migrate-db'));
+            return $this->transfer_util->ajax_error(__('Invalid folder path supplied.', 'wp-sync-db'));
         }
 
         if ('pull' === $state_data['intent']) {

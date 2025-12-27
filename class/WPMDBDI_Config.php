@@ -35,4 +35,4 @@ if (!empty($classes)) {
     return $classes;
 }
 
-throw new Exception(__("Classmap could not be generated.", 'wp-migrate-db'));
+throw new Exception(__("Classmap could not be generated.", 'wp-sync-db'));

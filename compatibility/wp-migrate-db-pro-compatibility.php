@@ -1,12 +1,12 @@
 <?php
-/*
-Plugin Name: WP Migrate Lite Compatibility
-Plugin URI: http://deliciousbrains.com/wp-migrate-db-pro/
-Description: Prevents 3rd party plugins from being loaded during WP Migrate DB specific operations
-Author: Delicious Brains
-Version: 1.3
-Author URI: http://deliciousbrains.com
-*/
+/**
+ * Plugin Name: WP Migrate Lite Compatibility
+ * Plugin URI: http://deliciousbrains.com/wp-migrate-db-pro/
+ * Description: Prevents 3rd party plugins from being loaded during WP Migrate DB specific operations
+ * Author: Delicious Brains
+ * Version: 1.3
+ * Author URI: http://deliciousbrains.com
+ */
 
 defined( 'ABSPATH' ) || exit;
 

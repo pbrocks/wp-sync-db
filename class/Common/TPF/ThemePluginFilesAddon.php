@@ -169,20 +169,20 @@ class ThemePluginFilesAddon extends AddonAbstract
     public function get_strings()
     {
         $strings = [
-            'themes'                 => __('Themes', 'wp-migrate-db'),
-            'plugins'                => __('Plugins', 'wp-migrate-db'),
-            'theme_and_plugin_files' => __('Themes & Plugins', 'wp-migrate-db'),
-            'theme_active'           => __('(active)', 'wp-migrate-db'),
-            'select_themes'          => __('Please select themes for migration.', 'wp-migrate-db'),
-            'select_plugins'         => __('Please select plugins for migration.', 'wp-migrate-db'),
-            'remote'                 => __('remote', 'wp-migrate-db'),
-            'local'                  => __('local', 'wp-migrate-db'),
-            'failed_to_transfer'     => __('Failed to transfer file.', 'wp-migrate-db'),
-            'file_transfer_error'    => __('Themes & Plugins Transfer Error', 'wp-migrate-db'),
-            'loading_transfer_queue' => __('Loading transfer queue', 'wp-migrate-db'),
-            'current_transfer'       => __('Transferring: ', 'wp-migrate-db'),
-            'cli_migrating_push'     => __('Uploading files', 'wp-migrate-db'),
-            'cli_migrating_pull'     => __('Downloading files', 'wp-migrate-db'),
+            'themes'                 => __('Themes', 'wp-sync-db'),
+            'plugins'                => __('Plugins', 'wp-sync-db'),
+            'theme_and_plugin_files' => __('Themes & Plugins', 'wp-sync-db'),
+            'theme_active'           => __('(active)', 'wp-sync-db'),
+            'select_themes'          => __('Please select themes for migration.', 'wp-sync-db'),
+            'select_plugins'         => __('Please select plugins for migration.', 'wp-sync-db'),
+            'remote'                 => __('remote', 'wp-sync-db'),
+            'local'                  => __('local', 'wp-sync-db'),
+            'failed_to_transfer'     => __('Failed to transfer file.', 'wp-sync-db'),
+            'file_transfer_error'    => __('Themes & Plugins Transfer Error', 'wp-sync-db'),
+            'loading_transfer_queue' => __('Loading transfer queue', 'wp-sync-db'),
+            'current_transfer'       => __('Transferring: ', 'wp-sync-db'),
+            'cli_migrating_push'     => __('Uploading files', 'wp-sync-db'),
+            'cli_migrating_pull'     => __('Downloading files', 'wp-sync-db'),
         ];
 
         if (is_null($this->strings)) {
@@ -461,7 +461,7 @@ class ThemePluginFilesAddon extends AddonAbstract
                     continue;
                 }
 
-                if (stristr($file, 'wp-migrate-db')) {
+                if (stristr($file, 'wp-sync-db')) {
                     continue;
                 }
 

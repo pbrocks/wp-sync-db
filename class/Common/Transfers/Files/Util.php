@@ -269,7 +269,7 @@ class Util
         }
 
         if (!empty($failures)) {
-            throw new \Exception(sprintf(__('The following files failed to transfer: <br> %s', 'wp-migrate-db'), implode('<br>', $failures)));
+            throw new \Exception(sprintf(__('The following files failed to transfer: <br> %s', 'wp-sync-db'), implode('<br>', $failures)));
         }
     }
 
@@ -713,7 +713,7 @@ class Util
         ];
 
         if ( ! $this->filesystem->mkdir( $tmp ) ) {
-            $message = sprintf( __( 'File transfer error - Unable to create a temporary folder. (%s)', 'wp-migrate-db' ), $tmp );
+            $message = sprintf( __( 'File transfer error - Unable to create a temporary folder. (%s)', 'wp-sync-db' ), $tmp );
             $this->error_log->log_error( $message );
 
             return [
@@ -727,7 +727,7 @@ class Util
         }
 
         if ( ! $this->filesystem->touch( $test_file ) ) {
-            $message = sprintf( __( 'File transfer error - Unable to create a PHP file on the server. (%s)', 'wp-migrate-db' ), $test_file );
+            $message = sprintf( __( 'File transfer error - Unable to create a PHP file on the server. (%s)', 'wp-sync-db' ), $test_file );
             $this->error_log->log_error( $message );
 
             return [
@@ -737,7 +737,7 @@ class Util
         }
 
         if ( ! file_put_contents( $test_file, 'test' ) ) {
-            $message = sprintf( __( 'File transfer error - Unable to update file contents using using PHP\'s file_put_contents() function. (%s)', 'wp-migrate-db' ), $test_file );
+            $message = sprintf( __( 'File transfer error - Unable to update file contents using using PHP\'s file_put_contents() function. (%s)', 'wp-sync-db' ), $test_file );
             $this->error_log->log_error( $message );
 
             return [
@@ -747,7 +747,7 @@ class Util
         }
 
         if ( ! rename( $test_file, $renamed_file ) ) {
-            $message = sprintf( __( 'File transfer error - Unable to move file to the correct location using PHP\'s rename() function. (%s)', 'wp-migrate-db' ), $renamed_file );
+            $message = sprintf( __( 'File transfer error - Unable to move file to the correct location using PHP\'s rename() function. (%s)', 'wp-sync-db' ), $renamed_file );
             $this->error_log->log_error( $message );
 
             return [
@@ -758,7 +758,7 @@ class Util
 
         //Clean up
         if ( ! $this->remove_tmp_folder( $options_to_dirs[$base] ) ) {
-            $message = sprintf( __( 'File transfer error - Unable to delete file using PHP\'s unlink() function. (%s)', 'wp-migrate-db' ), $renamed_file );
+            $message = sprintf( __( 'File transfer error - Unable to delete file using PHP\'s unlink() function. (%s)', 'wp-sync-db' ), $renamed_file );
             $this->error_log->log_error( $message );
 
             return [

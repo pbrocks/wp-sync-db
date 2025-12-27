@@ -41,7 +41,7 @@ class FullSiteExport
     {
         $zip = new ZipArchive();
         if ($zip->open($file_name, ZipArchive::CREATE) !== TRUE) {
-            return new \WP_Error('wp-migrate-db-export-not-created', __('Could not create ZIP Archive', 'wp-migrate-db'));
+            return new \WP_Error('wp-migrate-db-export-not-created', __('Could not create ZIP Archive', 'wp-sync-db'));
         }
         $stages = json_decode($state_data['stages']);
         $zip->addEmptyDir($this->determine_path('other_files', $stages));
@@ -83,7 +83,7 @@ class FullSiteExport
                 $add_file      = $zip->addFile($file['absolute_path'], $path . DIRECTORY_SEPARATOR . $relative_path);
                 if ( ! $add_file) {
                     return new \WP_Error('wp-migrate-db-could-not-add-file-to-archive',
-                        sprintf(__('Could not add %s to ZIP Archive', 'wp-migrate-db'), $file['name']));
+                        sprintf(__('Could not add %s to ZIP Archive', 'wp-sync-db'), $file['name']));
                 }
                 $count++;
                 $total_size += $file['size'];
@@ -171,12 +171,12 @@ class FullSiteExport
     public function delete_export_zip($zip_filename)
     {
         if (false === file_exists($zip_filename)){
-             return new \WP_Error('wp-migrate-db-could-not-find-archive-file', sprintf(__(' ZIP Archive %s does not exist', 'wp-migrate-db'), $zip_filename));
+             return new \WP_Error('wp-migrate-db-could-not-find-archive-file', sprintf(__(' ZIP Archive %s does not exist', 'wp-sync-db'), $zip_filename));
 
         }
         $removed = unlink($zip_filename);
         if (false === $removed) {
-            return new \WP_Error('wp-migrate-db-could-not-delete-archive-file', sprintf(__(' ZIP Archive %s could not be deleted', 'wp-migrate-db'), $zip_filename));
+            return new \WP_Error('wp-migrate-db-could-not-delete-archive-file', sprintf(__(' ZIP Archive %s could not be deleted', 'wp-sync-db'), $zip_filename));
         }
         return true;
     }

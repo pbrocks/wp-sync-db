@@ -93,8 +93,8 @@ class MediaFilesAddon extends AddonAbstract
 	function get_strings()
 	{
 		$strings = array(
-			'migrate_media_files_pull'     => __( 'Downloading files', 'wp-migrate-db' ),
-			'migrate_media_files_push'     => __( 'Uploading files', 'wp-migrate-db' )
+			'migrate_media_files_pull'     => __( 'Downloading files', 'wp-sync-db' ),
+			'migrate_media_files_push'     => __( 'Uploading files', 'wp-sync-db' )
 		);
 
 		if ( is_null( $this->media_strings ) ) {

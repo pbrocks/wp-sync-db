@@ -205,7 +205,7 @@ class ThemePluginFilesFinalize
         ];
 
         if (!$fs->file_exists($source)) {
-            $message = sprintf(__('Temporary file not found when finalizing %s Files migration: %s ', 'wp-migrate-db'), $singular_stages[$stage], $source);
+            $message = sprintf(__('Temporary file not found when finalizing %s Files migration: %s ', 'wp-sync-db'), $singular_stages[$stage], $source);
             $this->error_log->log_error($message);
 
             return new \WP_Error('wpmdbpro_theme_plugin_files_error', $message);
@@ -213,7 +213,7 @@ class ThemePluginFilesFinalize
 
         if ($fs->file_exists($dest)) {
             if (!$fs->is_writable($dest)) {
-                $message = sprintf(__('Unable to overwrite destination file when finalizing Theme & Plugin Files migration: %s', 'wp-migrate-db'), $source);
+                $message = sprintf(__('Unable to overwrite destination file when finalizing Theme & Plugin Files migration: %s', 'wp-sync-db'), $source);
                 $this->error_log->log_error($message);
                 error_log($message);
 
@@ -229,7 +229,7 @@ class ThemePluginFilesFinalize
         }
 
         if (!$fs->move($source, $dest)) {
-            $message = sprintf(__('Unable to move file into place when finalizing Theme & Plugin Files migration. Source: %s | Destination: %s', 'wp-migrate-db'), $source, $dest);
+            $message = sprintf(__('Unable to move file into place when finalizing Theme & Plugin Files migration. Source: %s | Destination: %s', 'wp-sync-db'), $source, $dest);
             $this->error_log->log_error($message);
             error_log($message);
 

@@ -734,7 +734,7 @@ class Replace
                 $data = serialize($data);
             }
         } catch (\Exception $error) {
-            $error_msg     = __('Failed attempting to do the recursive unserialize replace. Please contact support.', 'wp-migrate-db');
+            $error_msg     = __('Failed attempting to do the recursive unserialize replace. Please contact support.', 'wp-sync-db');
             $error_details = $error->getMessage() . "\n\n";
             $error_details .= var_export($data, true);
             $this->error_log->log_error($error_msg, $error_details);

@@ -103,7 +103,7 @@ class AddonsFacade
     public function legacy_addon_notice()
     {
         if (isset($_GET['legacyaddon'])) {
-            $message = __('Legacy addons cannot be activated alongside WP Migrate version 2.3.0 or above. These features have been moved to WP Migrate.', 'wp-migrate-db');
+            $message = __('Legacy addons cannot be activated alongside WP Migrate version 2.3.0 or above. These features have been moved to WP Migrate.', 'wp-sync-db');
             echo '<div class="updated" style="border-left: 4px solid #ffba00;"><p>' . $message . '</p></div>';
         }
     }

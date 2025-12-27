@@ -43,7 +43,7 @@ class Settings
             return self::$static_settings[$setting];
         }
 
-        throw new \InvalidArgumentException(__('Setting does not exist', 'wp-migrate-db'));
+        throw new \InvalidArgumentException(__('Setting does not exist', 'wp-sync-db'));
     }
 
     public function get_settings_for_frontend()

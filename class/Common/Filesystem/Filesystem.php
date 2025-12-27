@@ -824,10 +824,10 @@ class Filesystem
             } else {
                 $last_error = error_get_last();
                 $msg        = isset($last_error['message']) ? '<p>Error: ' . $last_error['message'] . '</p>' : '';
-                wp_die(sprintf(__('<h3>Output prevented download. </h3> %s', 'wp-migrate-db'), $msg));
+                wp_die(sprintf(__('<h3>Output prevented download. </h3> %s', 'wp-sync-db'), $msg));
             }
         } else {
-            wp_die(__('Could not find the file to download:', 'wp-migrate-db') . '<br>' . esc_html($diskfile));
+            wp_die(__('Could not find the file to download:', 'wp-sync-db') . '<br>' . esc_html($diskfile));
         }
     }
 
@@ -893,7 +893,7 @@ class Filesystem
         $upload_info['path'] = $upload_dir['basedir'];
         $upload_info['url']  = $upload_dir['baseurl'];
 
-        $upload_dir_name = apply_filters('wpmdb_upload_dir_name', 'wp-migrate-db');
+        $upload_dir_name = apply_filters('wpmdb_upload_dir_name', 'wp-sync-db');
 
         if (!file_exists($upload_dir['basedir'] . DIRECTORY_SEPARATOR . $upload_dir_name)) {
             $url = wp_nonce_url($props->plugin_base, 'wp-migrate-db-pro-nonce');
@@ -1081,7 +1081,7 @@ class Filesystem
         $plugin_list = array();
 
         foreach ($plugins as $key => $plugin) {
-            if ($exclude_mdb && 0 === strpos($key, 'wp-migrate-db')) {
+            if ($exclude_mdb && 0 === strpos($key, 'wp-sync-db')) {
                 continue;
             }
             $base_folder = preg_replace('/\/(.*)\.php/i', '', $key);

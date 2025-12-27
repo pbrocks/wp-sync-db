@@ -10,22 +10,58 @@ use DeliciousBrains\WPMDB\Common\Properties\Properties;
 use DeliciousBrains\WPMDB\Common\Settings\Settings;
 use DeliciousBrains\WPMDB\Common\Util\Util;
 
+/**
+ * Remote POST request handler for WP Migrate DB
+ *
+ * Handles HTTP POST requests to remote sites running WP Migrate DB,
+ * with comprehensive error handling, retry logic, and response validation.
+ *
+ * @package DeliciousBrains\WPMDB\Common\Http
+ */
 class RemotePost extends Http
 {
 
+    /** Retry connection using HTTPS */
+    /** Retry connection using HTTPS */
     const RESPONSE_RETRY_HTTPS = 'RESPONSE_RETRY_HTTPS';
+
+    /** External HTTP requests are blocked by WordPress */
     const RESPONSE_BLOCKED_EXTERNAL = 'RESPONSE_BLOCKED_EXTERNAL';
+
+    /** Unexpected error occurred */
     const RESPONSE_UNEXPECTED_ERROR = 'RESPONSE_UNEXPECTED_ERROR';
+
+    /** Connection timed out */
     const RESPONSE_TIMED_OUT = 'RESPONSE_TIMED_OUT';
+
+    /** Could not resolve hostname */
     const RESPONSE_NO_RESOLVE_HOST = 'RESPONSE_NO_RESOLVE_HOST';
+
+    /** Error connecting to port 443 */
     const RESPONSE_443_ERROR = 'RESPONSE_443_ERROR';
+
+    /** SSL/TLS error */
     const RESPONSE_SSL_ERROR = 'RESPONSE_SSL_ERROR';
+
+    /** HTTP 401 Unauthorized */
     const RESPONSE_401_ERROR = 'RESPONSE_401_ERROR';
+
+    /** HTTP 500 Internal Server Error */
     const RESPONSE_500_ERROR = 'RESPONSE_500_ERROR';
+
+    /** HTTP status code error */
     const RESPONSE_STATUS_ERROR = 'RESPONSE_STATUS_ERROR';
+
+    /** WP Migrate DB not active on remote */
     const RESPONSE_MDB_INACTIVE = 'RESPONSE_MDB_INACTIVE';
+
+    /** Empty response body */
     const RESPONSE_EMPTY_RESPONSE = 'RESPONSE_EMPTY_RESPONSE';
+
+    /** Error from remote site */
     const RESPONSE_REMOTE_ERROR = 'RESPONSE_REMOTE_ERROR';
+
+    /** Version mismatch between sites */
     const RESPONSE_VERSION_MISMATCH = 'RESPONSE_VERSION_MISMATCH';
 
     /**
@@ -53,10 +89,17 @@ class RemotePost extends Http
      */
     private $scrambler;
     /**
-     * @var
+     * Current migration state data
+     *
+     * @var array
      */
     private $state_data;
 
+    /**
+     * Error message from remote site
+     *
+     * @var string|false
+     */
     private $remote_error = false;
 
     public function __construct(
@@ -161,6 +204,20 @@ class RemotePost extends Http
     }
 
 
+    /**
+     * Handle and validate remote POST responses
+     *
+     * Processes the response from a remote POST request, checking for various
+     * error conditions and validating the response format.
+     *
+     * @param array|\WP_Error $response        The HTTP response
+     * @param string          $url             The URL that was requested
+     * @param string          $scope           The calling function scope
+     * @param bool            $expecting_serial Whether to expect serialized data
+     * @param array           $state_data      Optional migration state data
+     *
+     * @return bool|string True if valid, error code string otherwise
+     */
     public function handle_remote_post_responses($response, $url, $scope, $expecting_serial, $state_data = array())
     {
         if (is_wp_error($response)) {
@@ -227,6 +284,22 @@ class RemotePost extends Http
         return true;
     }
 
+    /**
+     * Handle specific response error codes
+     *
+     * Converts error codes into appropriate WP_Error objects with
+     * user-friendly messages.
+     *
+     * @param string          $code            Error code constant
+     * @param array|\WP_Error $response        The HTTP response
+     * @param string          $url             The URL that was requested
+     * @param array           $data            POST data sent
+     * @param string          $scope           The calling function scope
+     * @param array           $args            Request arguments
+     * @param bool            $expecting_serial Whether to expect serialized data
+     *
+     * @return \WP_Error|false WP_Error object or false
+     */
     public function handle_response_code($code, $response, $url, $data, $scope, $args, $expecting_serial)
     {
         if (is_wp_error($response) && 'RESPONSE_RETRY_HTTPS' !== $code) {
@@ -251,7 +324,7 @@ class RemotePost extends Http
                 return new \WP_Error(
                     'wpmdb-remote-post-http-blocked-external',
                     sprintf(
-                        __('We\'ve detected that <code>WP_HTTP_BLOCK_EXTERNAL</code> is enabled and the host <strong>%1$s</strong> has not been added to <code>WP_ACCESSIBLE_HOSTS</code>. Please disable <code>WP_HTTP_BLOCK_EXTERNAL</code> or add <strong>%1$s</strong> to <code>WP_ACCESSIBLE_HOSTS</code> to continue. <a href="%2$s" target="_blank">More information</a>. (#147 - scope: %3$s)', 'wp-migrate-db'),
+                        __('We\'ve detected that <code>WP_HTTP_BLOCK_EXTERNAL</code> is enabled and the host <strong>%1$s</strong> has not been added to <code>WP_ACCESSIBLE_HOSTS</code>. Please disable <code>WP_HTTP_BLOCK_EXTERNAL</code> or add <strong>%1$s</strong> to <code>WP_ACCESSIBLE_HOSTS</code> to continue. <a href="%2$s" target="_blank">More information</a>. (#147 - scope: %3$s)', 'wp-sync-db'),
                         esc_attr($host),
                         'https://deliciousbrains.com/wp-migrate-db-pro/doc/wp_http_block_external/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin',
                         $scope
@@ -262,12 +335,12 @@ class RemotePost extends Http
             case self::RESPONSE_UNEXPECTED_ERROR:
                 return new \WP_Error(
                     'wpmdb-remote-post-unexpected_error',
-                    sprintf(__('The connection failed, an unexpected error occurred, please contact support. (#121 - scope: %s)', 'wp-migrate-db'), $scope)
+                    sprintf(__('The connection failed, an unexpected error occurred, please contact support. (#121 - scope: %s)', 'wp-sync-db'), $scope)
                 );
             case self::RESPONSE_TIMED_OUT:
                 return new \WP_Error(
                     self::RESPONSE_TIMED_OUT,
-                    sprintf(__('The connection to the remote server has timed out, no changes have been committed. (#134 - scope: %s)', 'wp-migrate-db'), $scope)
+                    sprintf(__('The connection to the remote server has timed out, no changes have been committed. (#134 - scope: %s)', 'wp-sync-db'), $scope)
                 );
                 break;
             case self::RESPONSE_NO_RESOLVE_HOST:
@@ -275,13 +348,13 @@ class RemotePost extends Http
             case self::RESPONSE_443_ERROR:
                 return new \WP_Error(
                     self::RESPONSE_443_ERROR,
-                    sprintf(__('Couldn\'t connect over HTTPS. You might want to try regular HTTP instead. (#121 - scope: %s)', 'wp-migrate-db'), $scope)
+                    sprintf(__('Couldn\'t connect over HTTPS. You might want to try regular HTTP instead. (#121 - scope: %s)', 'wp-sync-db'), $scope)
                 );
             case self::RESPONSE_SSL_ERROR:
                 return new \WP_Error(
                     self::RESPONSE_SSL_ERROR,
                     sprintf(
-                        __('<strong>HTTPS Connection Error:</strong>  (#121 - scope: %s) This typically means that the version of OpenSSL that your local site is using to connect to the remote is incompatible or, more likely, being rejected by the remote server because it\'s insecure. <a href="%s" target="_blank">See our documentation</a> for possible solutions.', 'wp-migrate-db'),
+                        __('<strong>HTTPS Connection Error:</strong>  (#121 - scope: %s) This typically means that the version of OpenSSL that your local site is using to connect to the remote is incompatible or, more likely, being rejected by the remote server because it\'s insecure. <a href="%s" target="_blank">See our documentation</a> for possible solutions.', 'wp-sync-db'),
                         $scope,
                         'https://deliciousbrains.com/wp-migrate-db-pro/doc/ssl-errors/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin'
                     )
@@ -289,27 +362,27 @@ class RemotePost extends Http
             case self::RESPONSE_401_ERROR:
                 return new \WP_Error(
                     self::RESPONSE_401_ERROR,
-                    __('The remote site is protected with Basic Authentication. Please enter the username and password above to continue. (401 Unauthorized)', 'wp-migrate-db')
+                    __('The remote site is protected with Basic Authentication. Please enter the username and password above to continue. (401 Unauthorized)', 'wp-sync-db')
                 );
             case self::RESPONSE_500_ERROR:
                 return new \WP_Error(
                     self::RESPONSE_500_ERROR,
-                    sprintf(__('Unable to connect to the remote server, the remote server responded with: %s %s (scope: %s)', 'wp-migrate-db'), $response_code, $message, $scope)
+                    sprintf(__('Unable to connect to the remote server, the remote server responded with: %s %s (scope: %s)', 'wp-sync-db'), $response_code, $message, $scope)
                 );
             case self::RESPONSE_STATUS_ERROR:
                 return new \WP_Error(
                     self::RESPONSE_STATUS_ERROR,
-                    sprintf(__('Unable to connect to the remote server, please check the connection details - %1$s %2$s (#129 - scope: %3$s)', 'wp-migrate-db'), $response_code, $message, $scope)
+                    sprintf(__('Unable to connect to the remote server, please check the connection details - %1$s %2$s (#129 - scope: %3$s)', 'wp-sync-db'), $response_code, $message, $scope)
                 );
             case self::RESPONSE_MDB_INACTIVE:
                 return new \WP_Error(
                     self::RESPONSE_MDB_INACTIVE,
-                    sprintf(__('WP Migrate does not seem to be installed or active on the remote site. (#131 - scope: %s)', 'wp-migrate-db'), $scope)
+                    sprintf(__('WP Migrate does not seem to be installed or active on the remote site. (#131 - scope: %s)', 'wp-sync-db'), $scope)
                 );
             case self::RESPONSE_EMPTY_RESPONSE:
                 return new \WP_Error(
                     self::RESPONSE_EMPTY_RESPONSE,
-                    sprintf(__('A response was expected from the remote, instead we got nothing. (#146 - scope: %1$s) Please review %2$s for possible solutions.', 'wp-migrate-db'), $scope, sprintf('<a href="%s" target="_blank">%s</a>', 'https://deliciousbrains.com/wp-migrate-db-pro/doc/a-response-was-expected-from-the-remote/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin', __('our documentation', 'wp-migrate-db')))
+                    sprintf(__('A response was expected from the remote, instead we got nothing. (#146 - scope: %1$s) Please review %2$s for possible solutions.', 'wp-sync-db'), $scope, sprintf('<a href="%s" target="_blank">%s</a>', 'https://deliciousbrains.com/wp-migrate-db-pro/doc/a-response-was-expected-from-the-remote/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin', __('our documentation', 'wp-sync-db')))
                 );
             case self::RESPONSE_REMOTE_ERROR:
                 return new \WP_Error(
@@ -328,6 +401,17 @@ class RemotePost extends Http
         return false;
     }
 
+    /**
+     * Determine if request should be retried with different protocol
+     *
+     * Checks if an HTTPS request should be retried with HTTP during
+     * connection verification.
+     *
+     * @param string $url   The URL being requested
+     * @param string $scope The calling function scope
+     *
+     * @return bool True if should retry, false otherwise
+     */
     public function maybe_retry($url, $scope)
     {
         return 0 === strpos($url, 'https://') && 'ajax_verify_connection_to_remote_site' === $scope;
@@ -378,6 +462,18 @@ class RemotePost extends Http
         return false;
     }
 
+    /**
+     * Handle HTTP error status codes
+     *
+     * Processes specific HTTP error codes (401, 500, etc.) and returns
+     * appropriate error code constants.
+     *
+     * @param array  $response The HTTP response
+     * @param string $url      The URL that was requested
+     * @param string $scope    The calling function scope
+     *
+     * @return string Error code constant
+     */
     protected function handle_http_error_codes($response, $url, $scope)
     {
         switch ((int)$response['response']['code']) {
@@ -393,6 +489,17 @@ class RemotePost extends Http
         return self::RESPONSE_STATUS_ERROR;
     }
 
+    /**
+     * Handle empty response bodies
+     *
+     * Determines the appropriate error code when the response body is empty.
+     *
+     * @param array  $response The HTTP response
+     * @param string $url      The URL that was requested
+     * @param string $scope    The calling function scope
+     *
+     * @return string Error code constant
+     */
     protected function handle_empty_response_body($response, $url, $scope)
     {
         if ('ajax_verify_connection_to_remote_site' === $scope && '0' === $response['body']) {
@@ -449,6 +556,15 @@ class RemotePost extends Http
         return $response;
     }
 
+    /**
+     * Check if external requests are blocked for this URL
+     *
+     * Determines if WP_HTTP_BLOCK_EXTERNAL is blocking requests to the target host.
+     *
+     * @param string $url The URL to check
+     *
+     * @return bool|null True if blocked, null otherwise
+     */
     protected function handle_block_external($url)
     {
         if (\defined('WP_HTTP_BLOCK_EXTERNAL') && WP_HTTP_BLOCK_EXTERNAL) {
@@ -469,16 +585,16 @@ class RemotePost extends Http
      */
     protected function handle_unresolvable_host($url)
     {
-        $error = sprintf(__('We could not find: %s. Are you sure this is the correct URL?', 'wp-migrate-db'), $url);
+        $error = sprintf(__('We could not find: %s. Are you sure this is the correct URL?', 'wp-sync-db'), $url);
 
         $url_bits = Util::parse_url($url);
 
         if (strstr($url, 'dev.') || strstr($url, '.dev') || !strstr($url_bits['host'], '.')) {
             $error .= '<br>';
             if ('pull' === $this->state_data['intent']) {
-                $error .= __('It appears that you might be trying to pull from a local environment. This will not work if <u>this</u> website happens to be located on a remote server, it would be impossible for this server to contact your local environment.', 'wp-migrate-db');
+                $error .= __('It appears that you might be trying to pull from a local environment. This will not work if <u>this</u> website happens to be located on a remote server, it would be impossible for this server to contact your local environment.', 'wp-sync-db');
             } else {
-                $error .= __('It appears that you might be trying to push to a local environment. This will not work if <u>this</u> website happens to be located on a remote server, it would be impossible for this server to contact your local environment.', 'wp-migrate-db');
+                $error .= __('It appears that you might be trying to push to a local environment. This will not work if <u>this</u> website happens to be located on a remote server, it would be impossible for this server to contact your local environment.', 'wp-sync-db');
             }
         }
 
